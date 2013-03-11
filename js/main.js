@@ -20,6 +20,15 @@ window.onload = function()
         this.go = 0;
         this.horizonVel=0;
         this.verticalVel=0;
+        
+        this.checkDead = function()
+        {
+            if(this.y>600+this.radius)
+                return 1;
+            else
+                return 0;
+        }
+
         this.checkBrickCollision = function(brick)
         {
             if(this.y>=brick.y && this.y<=brick.y+brick.length && (this.x+this.radius==brick.x || this.x-this.radius==brick.x+brick.length))
@@ -171,6 +180,14 @@ window.onload = function()
                 index = index+1;
             }
         }
+        if(ball.checkDead())
+        {
+            clearInterval(intervalID);
+            ctx.font = "50px Arial";
+            ctx.fillText("Game Over!",100,500);
+            console.log("game over");
+        }
+            //game over
     }
     var ball, panel, brick=[];
     initialDraw();
@@ -189,7 +206,7 @@ window.onload = function()
         }
     }
 
-    setInterval(globalDraw,1);
+    var intervalID = setInterval(globalDraw,1);
 
 
     function randomRGB()
