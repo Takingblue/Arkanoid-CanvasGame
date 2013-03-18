@@ -42,7 +42,7 @@ window.onload = function()
             //four angles
             var basic_x = brick.x - this.x;
             var basic_y = brick.y - this.y;
-            if((basic_x+brick.length)*(basic_x*brick.length)+(basic_y+brick.length-1)*(basic_y+brick.length-1)==this.radius*this.radius)
+            if((basic_x+brick.length-1)*(basic_x+brick.length-1)+(basic_y+brick.length-1)*(basic_y+brick.length-1)==this.radius*this.radius)
             {
                 brick.gone=1;
                 this.horizonVel = -this.horizonVel;
@@ -54,13 +54,13 @@ window.onload = function()
                 this.horizonVel = -this.horizonVel;
                 this.verticalVel = -this.verticalVel;
             }
-            if((basic_x)*(basic_x)+(basic_y+1)*(basic_y+1)==this.radius*this.radius)
+            if((basic_x)*(basic_x)+(basic_y)*(basic_y)==this.radius*this.radius)
             {
                 brick.gone=1;
                 this.horizonVel = -this.horizonVel;
                 this.verticalVel = -this.verticalVel;
             }
-            if((basic_x+brick.length)*(basic_x+brick.length)+(basic_y+1)*(basic_y+1)==this.radius*this.radius)
+            if((basic_x+brick.length-1)*(basic_x+brick.length-1)+(basic_y)*(basic_y)==this.radius*this.radius)
             {
                 brick.gone=1;
                 this.horizonVel = -this.horizonVel;
