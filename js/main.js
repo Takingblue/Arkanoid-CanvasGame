@@ -8,9 +8,7 @@ window.onload = function()
     canvas.width = W;
     canvas.height = H;
 
-
-
-    /*  Ball class*/
+    //  Ball class
     function Ball(_radius, _x, _y)
     {
         this.radius = _radius;
@@ -31,15 +29,41 @@ window.onload = function()
 
         this.checkBrickCollision = function(brick)
         {
-            if(this.y>=brick.y && this.y<=brick.y+brick.length && (this.x+this.radius==brick.x || this.x-this.radius==brick.x+brick.length))
+            if(this.y>brick.y && this.y<brick.y+brick.length && (this.x+this.radius==brick.x || this.x-this.radius==brick.x+brick.length))
             {
                 brick.gone=1;
                 this.horizonVel = -this.horizonVel;
-                console.log(brick.length);
             }
-            if(this.x>=brick.x && this.x<=brick.x+brick.length && (this.y+this.radius==brick.y || this.y-this.radius==brick.y+brick.length))
+            if(this.x>brick.x && this.x<brick.x+brick.length && (this.y+this.radius==brick.y || this.y-this.radius==brick.y+brick.length))
             {
                 brick.gone=1;
+                this.verticalVel = -this.verticalVel;
+            }
+            //four angles
+            var basic_x = brick.x - this.x;
+            var basic_y = brick.y - this.y;
+            if((basic_x+brick.length)*(basic_x*brick.length)+(basic_y+brick.length-1)*(basic_y+brick.length-1)==this.radius*this.radius)
+            {
+                brick.gone=1;
+                this.horizonVel = -this.horizonVel;
+                this.verticalVel = -this.verticalVel;
+            }
+            if((basic_x)*(basic_x)+(basic_y+brick.length-1)*(basic_y+brick.length-1)==this.radius*this.radius)
+            {
+                brick.gone=1;
+                this.horizonVel = -this.horizonVel;
+                this.verticalVel = -this.verticalVel;
+            }
+            if((basic_x)*(basic_x)+(basic_y+1)*(basic_y+1)==this.radius*this.radius)
+            {
+                brick.gone=1;
+                this.horizonVel = -this.horizonVel;
+                this.verticalVel = -this.verticalVel;
+            }
+            if((basic_x+brick.length)*(basic_x+brick.length)+(basic_y+1)*(basic_y+1)==this.radius*this.radius)
+            {
+                brick.gone=1;
+                this.horizonVel = -this.horizonVel;
                 this.verticalVel = -this.verticalVel;
             }
         }
@@ -108,9 +132,9 @@ window.onload = function()
         this.move = function(keyCode)
         {
             if((keyCode==97 || keyCode==65) && this.moveLeft==1)  //left 
-                this.leftX = this.leftX-10;
+                this.leftX = this.leftX-15;
             else if((keyCode==100 || keyCode==68) && this.moveRight==1)  //right
-                this.leftX = this.leftX+10;
+                this.leftX = this.leftX+15;
         }
         this.draw = function()
         {
@@ -136,7 +160,7 @@ window.onload = function()
         }
     }
 
-    /*  =========== Main ==============   */
+    //  =========== Main ==============   
 
     function initialDraw()
     {
@@ -185,7 +209,6 @@ window.onload = function()
             clearInterval(intervalID);
             ctx.font = "50px Arial";
             ctx.fillText("Game Over!",100,500);
-            console.log("game over");
         }
             //game over
     }
@@ -196,13 +219,11 @@ window.onload = function()
         var event = window.event || event;
         if(event.keyCode==32)  //fire
         {
-            console.log("ya");
             ball.start();
         }
         else 
         {
             panel.move(event.keyCode);
-            console.log("ya2");
         }
     }
 
