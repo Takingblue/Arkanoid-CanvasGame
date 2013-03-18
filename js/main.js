@@ -3,7 +3,7 @@ window.onload = function()
     var canvas = document.getElementById("paintGround");
     var ctx = canvas.getContext("2d");
 
-    var W = 799;
+    var W = 800;
     var H = 600;
     canvas.width = W;
     canvas.height = H;
@@ -42,25 +42,26 @@ window.onload = function()
             //four angles
             var basic_x = brick.x - this.x;
             var basic_y = brick.y - this.y;
-            if((basic_x+brick.length-1)*(basic_x+brick.length-1)+(basic_y+brick.length-1)*(basic_y+brick.length-1)==this.radius*this.radius)
+            var rr = (this.radius)*(this.radius);
+            if((basic_x+brick.length)*(basic_x+brick.length)+(basic_y+brick.length)*(basic_y+brick.length)<=rr)
             {
                 brick.gone=1;
                 this.horizonVel = -this.horizonVel;
                 this.verticalVel = -this.verticalVel;
             }
-            if((basic_x)*(basic_x)+(basic_y+brick.length-1)*(basic_y+brick.length-1)==this.radius*this.radius)
+            if((basic_x)*(basic_x)+(basic_y+brick.length)*(basic_y+brick.length)<=rr)
             {
                 brick.gone=1;
                 this.horizonVel = -this.horizonVel;
                 this.verticalVel = -this.verticalVel;
             }
-            if((basic_x)*(basic_x)+(basic_y)*(basic_y)==this.radius*this.radius)
+            if((basic_x)*(basic_x)+(basic_y)*(basic_y)<=rr)
             {
                 brick.gone=1;
                 this.horizonVel = -this.horizonVel;
                 this.verticalVel = -this.verticalVel;
             }
-            if((basic_x+brick.length-1)*(basic_x+brick.length-1)+(basic_y)*(basic_y)==this.radius*this.radius)
+            if((basic_x+brick.length)*(basic_x+brick.length)+(basic_y)*(basic_y)<=rr)
             {
                 brick.gone=1;
                 this.horizonVel = -this.horizonVel;
@@ -168,9 +169,9 @@ window.onload = function()
         panel = new Panel(10, 200, 10);
         ball = new Ball(5, panel.leftX+panel.width/2,H-panel.height-5);
         var index=0;
-        for(var i=0;i<799;i=i+50)
+        for(var i=1;i<800;i=i+50)
         {
-            for(var j=0;j<300;j=j+50)
+            for(var j=1;j<300;j=j+50)
             {
                 brick[index] = new Brick(i,j,49);
                 brick[index].draw();
@@ -195,15 +196,8 @@ window.onload = function()
         clear();
         ball.draw(panel.leftX+panel.width/2);
         panel.draw();
-        index=0;
-        for(var i=0;i<799;i=i+50)
-        {
-            for(var j=0;j<300;j=j+50)
-            {
-                brick[index].draw();
-                index = index+1;
-            }
-        }
+        for(var i=0;i<96;i=i+1)
+            brick[i].draw();
         if(ball.checkDead())
         {
             clearInterval(intervalID);
@@ -242,7 +236,7 @@ window.onload = function()
     {
         ctx.fillStyle = "white";
         ctx.beginPath();
-        ctx.rect(0,0,799,600);
+        ctx.rect(0,0,800,600);
         ctx.closePath();
         ctx.fill();
     }
